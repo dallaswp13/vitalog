@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vitalog — Sign In</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏃</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f4f4f0; --card: #ffffff; --border: #e0e0dc;
+    --accent: #8a9e00; --accent2: #d94f1a;
+    --text: #1a1a1a; --muted: #888;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--bg); color: var(--text);
+    font-family: 'DM Sans', sans-serif; min-height: 100vh;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    padding: 20px;
+  }
+  body::before {
+    content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+    opacity: .2;
+  }
+  .page-wrap {
+    display: flex; align-items: stretch; gap: 0;
+    width: 100%; max-width: 820px;
+    position: relative; z-index: 1;
+    border-radius: 20px; overflow: hidden;
+    box-shadow: 0 8px 48px rgba(0,0,0,.1);
+  }
+  .features-panel {
+    background: #0f0f0f; color: #fff;
+    padding: 44px 36px; flex: 1; min-width: 0;
+    display: flex; flex-direction: column; justify-content: center;
+  }
+  .legal-links {
+    text-align: center; font-size: 11px; color: #aaa;
+    position: relative; z-index: 1;
+    padding: 16px 0 4px;
+    width: 100%; max-width: 820px;
+  }
+  .legal-links a { color: #8a9e00; text-decoration: none; margin: 0 8px; }
+  .legal-links span { color: #ddd; }
+  @media (max-width: 620px) {
+    .features-panel {
+      display: flex;
+      border-radius: 0;
+      padding: 28px 24px 20px;
+    }
+    .fp-features { gap: 8px; }
+    .fp-feat { padding: 10px 12px; }
+    .fp-headline { font-size: 22px; margin-bottom: 12px; }
+    .fp-logo { font-size: 34px; }
+    .page-wrap {
+      max-width: 420px;
+      flex-direction: column;
+    }
+    .container { width: 100%; padding: 28px 24px; }
+  }
+  .fp-logo { font-family: 'Bebas Neue'; font-size: 44px; line-height: .9; margin-bottom: 8px; }
+  .fp-logo span { color: #b4dc00; }
+  .fp-tagline { font-size: 13px; color: rgba(255,255,255,.4); margin-bottom: 28px; }
+  .fp-headline { font-family: 'Bebas Neue'; font-size: 26px; color: #fff; letter-spacing: 1px; margin-bottom: 18px; line-height: 1.1; }
+  .fp-headline span { color: #b4dc00; }
+  .fp-features { display: flex; flex-direction: column; gap: 12px; }
+  .fp-feat {
+    display: flex; align-items: flex-start; gap: 12px;
+    padding: 12px 14px;
+    background: rgba(255,255,255,.04);
+    border: 1px solid rgba(255,255,255,.07);
+    border-radius: 12px;
+  }
+  .fp-feat-icon { font-size: 18px; flex-shrink: 0; }
+  .fp-feat-title { font-size: 12px; font-weight: 700; color: #fff; margin-bottom: 2px; }
+  .fp-feat-sub { font-size: 11px; color: rgba(255,255,255,.35); line-height: 1.4; }
+  .fp-ai-badge {
+    display: inline-flex; align-items: center; gap: 5px;
+    background: rgba(180,220,0,.1); border: 1px solid rgba(180,220,0,.2);
+    border-radius: 99px; padding: 4px 10px; font-size: 10px;
+    color: #b4dc00; font-weight: 700; letter-spacing: 1px;
+    margin-top: 20px;
+  }
+  .container {
+    background: var(--card); border: none;
+    padding: 40px 36px; width: 380px; flex-shrink: 0;
+    position: relative;
+  }
+  .logo { font-family: 'Bebas Neue'; font-size: 48px; line-height: .9; margin-bottom: 6px; }
+  .logo span { color: var(--accent); }
+  .tagline { font-size: 13px; color: var(--muted); margin-bottom: 32px; }
+  .tabs { display: flex; gap: 0; margin-bottom: 28px; border-bottom: 1px solid var(--border); }
+  .tab {
+    flex: 1; padding: 10px; text-align: center; font-size: 13px;
+    letter-spacing: 1px; text-transform: uppercase; color: var(--muted);
+    background: none; border: none; cursor: pointer; font-family: 'DM Sans';
+    border-bottom: 2px solid transparent; margin-bottom: -1px; transition: all .2s;
+  }
+  .tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+  .form { display: none; flex-direction: column; gap: 14px; }
+  .form.active { display: flex; }
+  label { font-size: 11px; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); display: block; margin-bottom: 4px; }
+  input {
+    width: 100%; background: #f8f8f4; border: 1px solid var(--border);
+    color: var(--text); font-family: 'DM Sans'; font-size: 14px;
+    padding: 12px 14px; border-radius: 10px; transition: border-color .2s;
+  }
+  input:focus { outline: none; border-color: var(--accent); }
+  .password-wrap { position:relative; display:flex; align-items:center; }
+  .password-wrap input { flex:1; padding-right:44px; }
+  .show-pass-btn { position:absolute; right:10px; background:none; border:none; cursor:pointer; color:#888; padding:4px; display:flex; align-items:center; border-radius:4px; transition:color .15s; }
+  .show-pass-btn:hover { color:#ccc; }
+  .submit-btn {
+    background: var(--accent); color: #fff; border: none;
+    font-family: 'Bebas Neue'; font-size: 20px; letter-spacing: 1px;
+    padding: 14px; border-radius: 10px; cursor: pointer;
+    transition: all .2s; margin-top: 4px;
+  }
+  .submit-btn:hover { background: #7a8e00; transform: translateY(-1px); }
+  .submit-btn:disabled { opacity: .6; cursor: not-allowed; transform: none; }
+  .error {
+    background: #fff0ee; border: 1px solid #ffd0c8; border-radius: 8px;
+    padding: 10px 14px; font-size: 13px; color: var(--accent2); display: none;
+  }
+  .error.show { display: block; }
+  .success {
+    background: #f0f8e8; border: 1px solid #d0e8a0; border-radius: 8px;
+    padding: 10px 14px; font-size: 13px; color: var(--accent); display: none;
+  }
+  .success.show { display: block; }
+  .divider { text-align: center; font-size: 12px; color: var(--muted); position: relative; }
+  .divider::before, .divider::after {
+    content: ''; position: absolute; top: 50%; width: 42%; height: 1px;
+    background: var(--border);
+  }
+  .divider::before { left: 0; } .divider::after { right: 0; }
+  .google-btn {
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+    background: var(--card); border: 1px solid var(--border); color: var(--text);
+    font-family: 'DM Sans'; font-size: 14px; padding: 12px; border-radius: 10px;
+    cursor: pointer; transition: all .2s; font-weight: 500;
+  }
+  .google-btn:hover { border-color: var(--accent); }
+  .google-icon { width: 18px; height: 18px; }
+</style>
+</head>
+<body>
+<div class="page-wrap">
+  <!-- Features panel — left side -->
+  <div class="features-panel">
+    <div class="fp-logo">MY<br><span>VITALOG.</span></div>
+    <div class="fp-tagline">Your personal health & fitness companion</div>
+    <div class="fp-headline">EVERYTHING YOU NEED<br>TO <span>FEEL YOUR BEST.</span></div>
+    <div class="fp-features">
+      <div class="fp-feat">
+        <div class="fp-feat-icon">🍽</div>
+        <div>
+          <div class="fp-feat-title">Food & Macro Tracking</div>
+          <div class="fp-feat-sub">Log meals with AI-estimated nutrition in seconds</div>
+        </div>
+      </div>
+      <div class="fp-feat">
+        <div class="fp-feat-icon">🏋</div>
+        <div>
+          <div class="fp-feat-title">Workouts & Exercise</div>
+          <div class="fp-feat-sub">Weekly plans, custom workouts, daily progress tracking</div>
+        </div>
+      </div>
+      <div class="fp-feat">
+        <div class="fp-feat-icon">😴</div>
+        <div>
+          <div class="fp-feat-title">Sleep, Mood & Journal</div>
+          <div class="fp-feat-sub">Track rest quality and how you feel every day</div>
+        </div>
+      </div>
+      <div class="fp-feat">
+        <div class="fp-feat-icon">📊</div>
+        <div>
+          <div class="fp-feat-title">Metrics & AI Insights</div>
+          <div class="fp-feat-sub">Charts, weekly AI summaries, and personalized goal plans</div>
+        </div>
+      </div>
+    </div>
+    <div class="fp-ai-badge">✦ Powered by AI</div>
+  </div>
+
+  <!-- Auth panel — right side -->
+  <div class="container">
+  <div class="logo" style="font-size:36px;margin-bottom:4px">MY<br><span>VITALOG.</span></div>
+  <p class="tagline">Sign in or create a free account.</p>
+
+  <div class="tabs">
+    <button class="tab active" data-tab="signin" onclick="showTab('signin')">Sign In</button>
+    <button class="tab" data-tab="signup" onclick="showTab('signup')">Create Account</button>
+  </div>
+
+  <div id="error-msg" class="error"></div>
+  <div id="success-msg" class="success"></div>
+
+  <!-- Sign In -->
+  <form id="form-signin" class="form active" onsubmit="handleSignIn(event)">
+    <div>
+      <label>Email</label>
+      <input type="email" id="signin-email" placeholder="you@example.com" required autocomplete="email">
+    </div>
+    <div>
+      <label>Password</label>
+      <div class="password-wrap">
+        <input type="password" id="signin-password" placeholder="••••••••" required autocomplete="current-password">
+        <button type="button" class="show-pass-btn" onclick="togglePassword('signin-password',this)" title="Show password">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+        </button>
+      </div>
+    </div>
+    <button type="submit" class="submit-btn" id="signin-btn">SIGN IN</button>
+  </form>
+
+  <!-- Sign Up -->
+  <form id="form-signup" class="form" onsubmit="handleSignUp(event)">
+    <div>
+      <label>Your Name</label>
+      <input type="text" id="signup-name" placeholder="e.g. Alex" autocomplete="given-name">
+    </div>
+    <div>
+      <label>Email</label>
+      <input type="email" id="signup-email" placeholder="you@example.com" required autocomplete="email">
+    </div>
+    <div>
+      <label>Password</label>
+      <div class="password-wrap">
+        <input type="password" id="signup-password" placeholder="At least 6 characters" required autocomplete="new-password">
+        <button type="button" class="show-pass-btn" onclick="togglePassword('signup-password',this)" title="Show password">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+        </button>
+      </div>
+    </div>
+    <div>
+      <label>Confirm Password</label>
+      <div class="password-wrap">
+        <input type="password" id="signup-confirm" placeholder="••••••••" required autocomplete="new-password">
+        <button type="button" class="show-pass-btn" onclick="togglePassword('signup-confirm',this)" title="Show password">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+        </button>
+      </div>
+    </div>
+    <button type="submit" class="submit-btn" id="signup-btn">CREATE ACCOUNT</button>
+  </form>
+
+  <div class="divider" style="margin: 20px 0">or</div>
+  <button class="google-btn" onclick="handleGoogle()">
+    <svg class="google-icon" viewBox="0 0 24 24">
+      <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+      <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+      <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/>
+      <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+    </svg>
+    Continue with Google
+  </button>
+  </div>
+</div>
+
+<div class="legal-links">
+  <a href="privacy.html">Privacy Policy</a>
+  <span>·</span>
+  <a href="terms.html">Terms of Service</a>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const SUPABASE_URL = 'https://fqovfqzysvctejmtwigj.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_AgTnpMdSur2PLSGfGN8t8g_m1vgG5DH';
+const _db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+// Redirect if already logged in
+_db.auth.getSession().then(({ data: { session } }) => {
+  if (session) window.location.href = 'app.html';
+});
+
+function showTab(tab) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.form').forEach(f => f.classList.remove('active'));
+  document.getElementById('form-' + tab).classList.add('active');
+  document.querySelector('.tab[data-tab="' + tab + '"]').classList.add('active');
+  clearMessages();
+}
+
+function showError(msg) {
+  const el = document.getElementById('error-msg');
+  el.textContent = msg; el.classList.add('show');
+  document.getElementById('success-msg').classList.remove('show');
+}
+function showSuccess(msg) {
+  const el = document.getElementById('success-msg');
+  el.textContent = msg; el.classList.add('show');
+  document.getElementById('error-msg').classList.remove('show');
+}
+function clearMessages() {
+  document.getElementById('error-msg').classList.remove('show');
+  document.getElementById('success-msg').classList.remove('show');
+}
+
+function togglePassword(id, btn) {
+  const input = document.getElementById(id);
+  const isHidden = input.type === 'password';
+  input.type = isHidden ? 'text' : 'password';
+  // Swap icon: open eye vs eye-off
+  btn.innerHTML = isHidden
+    ? `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/><path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/><line x1="1" y1="1" x2="23" y2="23"/></svg>`
+    : `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>`;
+}
+
+async function handleSignIn(e) {
+  e.preventDefault();
+  const btn = document.getElementById('signin-btn');
+  btn.disabled = true; btn.textContent = 'SIGNING IN...';
+  clearMessages();
+  const email = document.getElementById('signin-email').value;
+  const password = document.getElementById('signin-password').value;
+  const { error } = await _db.auth.signInWithPassword({ email, password });
+  if (error) {
+    showError(error.message);
+    btn.disabled = false; btn.textContent = 'SIGN IN';
+  } else {
+    window.location.href = 'app.html';
+  }
+}
+
+async function handleSignUp(e) {
+  e.preventDefault();
+  clearMessages();
+  const password = document.getElementById('signup-password').value;
+  const confirm = document.getElementById('signup-confirm').value;
+  if (password !== confirm) { showError('Passwords do not match.'); return; }
+  if (password.length < 6) { showError('Password must be at least 6 characters.'); return; }
+  const btn = document.getElementById('signup-btn');
+  btn.disabled = true; btn.textContent = 'CREATING...';
+  const email = document.getElementById('signup-email').value;
+  const name = (document.getElementById('signup-name').value || '').trim();
+  const { error } = await _db.auth.signUp({ email, password });
+  if (error) {
+    showError(error.message);
+    btn.disabled = false; btn.textContent = 'CREATE ACCOUNT';
+  } else {
+    // Save name to localStorage so app.js picks it up on first load
+    if (name) {
+      try {
+        const existing = JSON.parse(localStorage.getItem('vitalog_settings') || '{}');
+        existing.name = name;
+        localStorage.setItem('vitalog_settings', JSON.stringify(existing));
+      } catch(e) {}
+    }
+    showSuccess('Account created! Check your email to confirm, then sign in.');
+    btn.disabled = false; btn.textContent = 'CREATE ACCOUNT';
+  }
+}
+
+async function handleGoogle() {
+  const { error } = await _db.auth.signInWithOAuth({
+    provider: 'google',
+    options: { redirectTo: window.location.origin + '/app.html' }
+  });
+  if (error) showError(error.message);
+}
+</script>
+</body>
+</html>

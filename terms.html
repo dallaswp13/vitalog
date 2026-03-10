@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Terms of Service — Vitalog</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏃</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f4f4f0; --card: #ffffff; --border: #e0e0dc;
+    --accent: #8a9e00; --accent2: #d94f1a;
+    --text: #1a1a1a; --muted: #777; --dark: #0f0f0f;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--bg); color: var(--text);
+    font-family: 'DM Sans', sans-serif; min-height: 100vh;
+    line-height: 1.7;
+  }
+  body::before {
+    content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+    opacity: .2;
+  }
+  header {
+    background: var(--dark); color: #fff;
+    padding: 0 24px;
+    position: sticky; top: 0; z-index: 100;
+    box-shadow: 0 2px 20px rgba(0,0,0,.2);
+  }
+  .header-inner {
+    max-width: 800px; margin: 0 auto;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 56px;
+  }
+  .header-logo {
+    font-family: 'Bebas Neue'; font-size: 28px; line-height: 1;
+    text-decoration: none; color: #fff; letter-spacing: 1px;
+  }
+  .header-logo span { color: #b4dc00; }
+  .header-nav { display: flex; gap: 16px; align-items: center; }
+  .header-nav a {
+    font-size: 12px; color: rgba(255,255,255,.5); text-decoration: none;
+    letter-spacing: .5px; transition: color .2s;
+  }
+  .header-nav a:hover { color: #b4dc00; }
+  .header-nav .cta {
+    background: #b4dc00; color: #000; font-weight: 700;
+    padding: 7px 16px; border-radius: 8px; font-size: 12px;
+  }
+  .header-nav .cta:hover { filter: brightness(1.1); color: #000; }
+  .hero {
+    background: var(--dark); color: #fff;
+    padding: 52px 24px 44px;
+    border-bottom: 1px solid rgba(255,255,255,.06);
+  }
+  .hero-inner { max-width: 800px; margin: 0 auto; }
+  .hero-eyebrow {
+    font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
+    color: #b4dc00; font-weight: 700; margin-bottom: 10px;
+  }
+  .hero-title {
+    font-family: 'Bebas Neue'; font-size: 56px; line-height: .9;
+    letter-spacing: 1px; margin-bottom: 12px;
+  }
+  .hero-title span { color: #b4dc00; }
+  .hero-meta { font-size: 13px; color: rgba(255,255,255,.35); }
+  .content {
+    max-width: 800px; margin: 0 auto;
+    padding: 48px 24px 80px;
+    position: relative; z-index: 1;
+  }
+  .toc {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 16px; padding: 24px 28px; margin-bottom: 40px;
+  }
+  .toc-title {
+    font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--muted); font-weight: 600; margin-bottom: 14px;
+  }
+  .toc ol { padding-left: 18px; display: flex; flex-direction: column; gap: 6px; }
+  .toc a { font-size: 13px; color: var(--accent); text-decoration: none; transition: opacity .2s; }
+  .toc a:hover { opacity: .7; }
+  section { margin-bottom: 44px; scroll-margin-top: 72px; }
+  .section-num {
+    font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--accent); font-weight: 700; margin-bottom: 6px;
+  }
+  h2 {
+    font-family: 'Bebas Neue'; font-size: 32px; letter-spacing: .5px;
+    line-height: 1; margin-bottom: 16px;
+  }
+  p { font-size: 14px; color: #333; margin-bottom: 14px; }
+  ul, ol { padding-left: 20px; margin-bottom: 14px; display: flex; flex-direction: column; gap: 6px; }
+  li { font-size: 14px; color: #333; }
+  strong { font-weight: 600; color: var(--text); }
+  .highlight-box {
+    background: var(--card); border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 12px 12px 0;
+    padding: 16px 20px; margin: 20px 0;
+    font-size: 13px; color: var(--muted); line-height: 1.7;
+  }
+  .highlight-box strong { color: var(--text); }
+  .warning-box {
+    background: #fff8f6; border: 1px solid #ffd0c0;
+    border-left: 3px solid var(--accent2);
+    border-radius: 0 12px 12px 0;
+    padding: 16px 20px; margin: 20px 0;
+    font-size: 13px; color: #a04020; line-height: 1.7;
+  }
+  .warning-box strong { color: #7a2010; }
+  footer {
+    background: var(--dark); color: rgba(255,255,255,.3);
+    padding: 28px 24px; text-align: center; font-size: 12px;
+  }
+  footer a { color: #b4dc00; text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
+  .footer-links { display: flex; gap: 20px; justify-content: center; margin-bottom: 10px; flex-wrap: wrap; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="header-logo">MY<span>VITALOG.</span></a>
+    <nav class="header-nav">
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="index.html" class="cta">Sign In</a>
+    </nav>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">Legal</div>
+    <div class="hero-title">TERMS OF<br><span>SERVICE.</span></div>
+    <div class="hero-meta">Last updated: March 2026 &nbsp;·&nbsp; Effective immediately</div>
+  </div>
+</div>
+
+<div class="content">
+
+  <div class="toc">
+    <div class="toc-title">Contents</div>
+    <ol>
+      <li><a href="#agreement">Agreement to Terms</a></li>
+      <li><a href="#service">The Service</a></li>
+      <li><a href="#accounts">Accounts & Eligibility</a></li>
+      <li><a href="#acceptable">Acceptable Use</a></li>
+      <li><a href="#health">Health Disclaimer</a></li>
+      <li><a href="#ai-terms">AI Features</a></li>
+      <li><a href="#ip">Intellectual Property</a></li>
+      <li><a href="#your-content">Your Content</a></li>
+      <li><a href="#termination">Termination</a></li>
+      <li><a href="#liability">Limitation of Liability</a></li>
+      <li><a href="#changes">Changes to Terms</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ol>
+  </div>
+
+  <section id="agreement">
+    <div class="section-num">01</div>
+    <h2>AGREEMENT TO TERMS</h2>
+    <p>By accessing or using Vitalog at myvitalog.com ("the Service"), you agree to be bound by these Terms of Service. If you do not agree, do not use the Service.</p>
+    <p>These Terms apply to all users, including visitors, registered users, and anyone who accesses the Service in any way.</p>
+  </section>
+
+  <section id="service">
+    <div class="section-num">02</div>
+    <h2>THE SERVICE</h2>
+    <p>Vitalog is a personal health and fitness tracking web application. It allows users to log food intake, workouts, sleep, mood, and body metrics, and provides AI-powered insights and summaries based on that data.</p>
+    <p>The Service is currently provided free of charge. We reserve the right to introduce paid features or subscription tiers in the future. If we do, we will give you reasonable notice and the option to continue using any free tier.</p>
+    <p>We strive for high availability but do not guarantee uninterrupted access. We may perform maintenance, updates, or modifications at any time.</p>
+  </section>
+
+  <section id="accounts">
+    <div class="section-num">03</div>
+    <h2>ACCOUNTS & ELIGIBILITY</h2>
+    <p>To use Vitalog, you must create an account with a valid email address. You must be at least <strong>13 years of age</strong> to use the Service. If you are between 13 and 18, you confirm that you have your parent or guardian's permission.</p>
+    <p>You are responsible for:</p>
+    <ul>
+      <li>Keeping your password secure and confidential</li>
+      <li>All activity that occurs under your account</li>
+      <li>Notifying us immediately if you suspect unauthorized access</li>
+    </ul>
+    <p>You may only create one account per person. Creating accounts on behalf of others without their consent is not permitted.</p>
+  </section>
+
+  <section id="acceptable">
+    <div class="section-num">04</div>
+    <h2>ACCEPTABLE USE</h2>
+    <p>You agree to use Vitalog only for its intended purpose — personal health tracking. You agree not to:</p>
+    <ul>
+      <li>Use the Service for any illegal purpose or in violation of any law</li>
+      <li>Attempt to gain unauthorized access to any part of the Service or its infrastructure</li>
+      <li>Reverse engineer, decompile, or attempt to extract the source code of the Service</li>
+      <li>Use automated tools (bots, scrapers) to access or collect data from the Service</li>
+      <li>Transmit any malware, viruses, or other harmful code</li>
+      <li>Impersonate any person or entity</li>
+      <li>Use the Service in any way that could damage, disable, or impair it</li>
+    </ul>
+    <p>We reserve the right to suspend or terminate accounts that violate these terms without notice.</p>
+  </section>
+
+  <section id="health">
+    <div class="section-num">05</div>
+    <h2>HEALTH DISCLAIMER</h2>
+    <div class="warning-box">
+      <strong>Important — please read carefully.</strong> Vitalog is a personal tracking tool, not a medical application. Nothing in the Service — including AI-generated summaries, goal plans, macro recommendations, or any other content — constitutes medical advice, diagnosis, or treatment.
+    </div>
+    <p>Always consult a qualified healthcare provider before making significant changes to your diet, exercise routine, or health regimen. Do not disregard professional medical advice or delay seeking it because of something you read or received from Vitalog.</p>
+    <p>The AI features in Vitalog are designed to provide general wellness guidance based on the data you log. They are not a substitute for professional medical, nutritional, or fitness advice.</p>
+    <p>If you are experiencing a medical emergency, contact emergency services immediately. Do not use Vitalog as a crisis resource.</p>
+  </section>
+
+  <section id="ai-terms">
+    <div class="section-num">06</div>
+    <h2>AI FEATURES</h2>
+    <p>Vitalog uses Anthropic's Claude AI to power certain features including macro estimation, weekly health summaries, goal planning, and the AI chat assistant. By using these features, you acknowledge:</p>
+    <ul>
+      <li>AI-generated content may be inaccurate, incomplete, or not appropriate for your specific situation</li>
+      <li>Macro estimates are approximations and should not be relied upon for medical nutrition planning</li>
+      <li>Weekly summaries and goal plans are general suggestions, not professional advice</li>
+      <li>Your data is sent to Anthropic's servers to generate responses — see our Privacy Policy for details</li>
+    </ul>
+    <p>You use AI features at your own discretion and risk. Vitalog is not liable for decisions made based on AI-generated content.</p>
+  </section>
+
+  <section id="ip">
+    <div class="section-num">07</div>
+    <h2>INTELLECTUAL PROPERTY</h2>
+    <p>The Vitalog name, logo, design, code, and all original content are the intellectual property of Vitalog and protected by copyright law. You may not copy, reproduce, distribute, or create derivative works without our express written permission.</p>
+    <p>Accessing the Service does not grant you any ownership rights over the Service itself.</p>
+  </section>
+
+  <section id="your-content">
+    <div class="section-num">08</div>
+    <h2>YOUR CONTENT</h2>
+    <p>All health data, journal entries, and other content you log into Vitalog ("Your Content") remains yours. You grant us a limited, non-exclusive license to store, display, and process Your Content solely for the purpose of providing the Service to you.</p>
+    <p>We do not claim ownership over your personal health data. We do not use it for advertising or share it with third parties beyond what is described in our Privacy Policy.</p>
+    <p>You can delete Your Content at any time using the "Clear All Data" feature in Settings.</p>
+  </section>
+
+  <section id="termination">
+    <div class="section-num">09</div>
+    <h2>TERMINATION</h2>
+    <p>You may stop using Vitalog and request account deletion at any time by contacting us through the in-app Contact Us form.</p>
+    <p>We reserve the right to suspend or terminate your account if you violate these Terms, engage in abusive behavior, or if we discontinue the Service. In cases of termination due to our decision to discontinue the Service, we will provide reasonable notice.</p>
+    <p>Upon account deletion, your personal health data will be permanently removed from our systems within 30 days.</p>
+  </section>
+
+  <section id="liability">
+    <div class="section-num">10</div>
+    <h2>LIMITATION OF LIABILITY</h2>
+    <p>To the maximum extent permitted by law, Vitalog is provided "as is" and "as available" without warranties of any kind, either express or implied.</p>
+    <p>We are not liable for any indirect, incidental, special, consequential, or punitive damages arising from your use of the Service, including but not limited to:</p>
+    <ul>
+      <li>Loss of data</li>
+      <li>Service interruptions or outages</li>
+      <li>Decisions made based on AI-generated content</li>
+      <li>Health outcomes resulting from use of the Service</li>
+    </ul>
+    <div class="highlight-box">
+      Some jurisdictions do not allow limitations on liability, so the above may not apply to you in full. Nothing in these Terms limits liability for fraud, gross negligence, or intentional misconduct.
+    </div>
+  </section>
+
+  <section id="changes">
+    <div class="section-num">11</div>
+    <h2>CHANGES TO TERMS</h2>
+    <p>We may update these Terms of Service as the Service evolves. When we make material changes, we will update the "Last updated" date at the top of this page and notify you via email or in-app notice where appropriate.</p>
+    <p>Your continued use of Vitalog after changes take effect constitutes acceptance of the updated Terms. If you do not agree to the updated Terms, you must stop using the Service.</p>
+  </section>
+
+  <section id="contact">
+    <div class="section-num">12</div>
+    <h2>CONTACT</h2>
+    <p>If you have questions about these Terms, please contact us through the <strong>Contact Us</strong> form in the Vitalog app (Settings → Contact Us).</p>
+    <div class="highlight-box">
+      <strong>Vitalog</strong><br>
+      myvitalog.com<br>
+      Contact via the in-app form in Settings → Contact Us
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  <div class="footer-links">
+    <a href="index.html">Sign In</a>
+    <a href="privacy.html">Privacy Policy</a>
+    <a href="terms.html">Terms of Service</a>
+  </div>
+  <div>© 2026 Vitalog. All rights reserved.</div>
+</footer>
+
+</body>
+</html>

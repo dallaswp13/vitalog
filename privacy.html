@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Privacy Policy — Vitalog</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏃</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f4f4f0; --card: #ffffff; --border: #e0e0dc;
+    --accent: #8a9e00; --accent2: #d94f1a;
+    --text: #1a1a1a; --muted: #777; --dark: #0f0f0f;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--bg); color: var(--text);
+    font-family: 'DM Sans', sans-serif; min-height: 100vh;
+    line-height: 1.7;
+  }
+  body::before {
+    content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+    opacity: .2;
+  }
+
+  /* ── Header ── */
+  header {
+    background: var(--dark); color: #fff;
+    padding: 0 24px;
+    position: sticky; top: 0; z-index: 100;
+    box-shadow: 0 2px 20px rgba(0,0,0,.2);
+  }
+  .header-inner {
+    max-width: 800px; margin: 0 auto;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 56px;
+  }
+  .header-logo {
+    font-family: 'Bebas Neue'; font-size: 28px; line-height: 1;
+    text-decoration: none; color: #fff; letter-spacing: 1px;
+  }
+  .header-logo span { color: #b4dc00; }
+  .header-nav { display: flex; gap: 16px; align-items: center; }
+  .header-nav a {
+    font-size: 12px; color: rgba(255,255,255,.5); text-decoration: none;
+    letter-spacing: .5px; transition: color .2s;
+  }
+  .header-nav a:hover { color: #b4dc00; }
+  .header-nav .cta {
+    background: #b4dc00; color: #000; font-weight: 700;
+    padding: 7px 16px; border-radius: 8px; font-size: 12px;
+    letter-spacing: .5px;
+  }
+  .header-nav .cta:hover { filter: brightness(1.1); color: #000; }
+
+  /* ── Hero banner ── */
+  .hero {
+    background: var(--dark); color: #fff;
+    padding: 52px 24px 44px;
+    border-bottom: 1px solid rgba(255,255,255,.06);
+  }
+  .hero-inner { max-width: 800px; margin: 0 auto; }
+  .hero-eyebrow {
+    font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
+    color: #b4dc00; font-weight: 700; margin-bottom: 10px;
+  }
+  .hero-title {
+    font-family: 'Bebas Neue'; font-size: 56px; line-height: .9;
+    letter-spacing: 1px; margin-bottom: 12px;
+  }
+  .hero-title span { color: #b4dc00; }
+  .hero-meta {
+    font-size: 13px; color: rgba(255,255,255,.35);
+  }
+
+  /* ── Content ── */
+  .content {
+    max-width: 800px; margin: 0 auto;
+    padding: 48px 24px 80px;
+    position: relative; z-index: 1;
+  }
+  .toc {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 16px; padding: 24px 28px; margin-bottom: 40px;
+  }
+  .toc-title {
+    font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--muted); font-weight: 600; margin-bottom: 14px;
+  }
+  .toc ol {
+    padding-left: 18px; display: flex; flex-direction: column; gap: 6px;
+  }
+  .toc a {
+    font-size: 13px; color: var(--accent); text-decoration: none;
+    transition: opacity .2s;
+  }
+  .toc a:hover { opacity: .7; }
+
+  section {
+    margin-bottom: 44px; scroll-margin-top: 72px;
+  }
+  .section-num {
+    font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--accent); font-weight: 700; margin-bottom: 6px;
+  }
+  h2 {
+    font-family: 'Bebas Neue'; font-size: 32px; letter-spacing: .5px;
+    line-height: 1; margin-bottom: 16px; color: var(--text);
+  }
+  p { font-size: 14px; color: #333; margin-bottom: 14px; }
+  ul, ol {
+    padding-left: 20px; margin-bottom: 14px;
+    display: flex; flex-direction: column; gap: 6px;
+  }
+  li { font-size: 14px; color: #333; }
+  strong { font-weight: 600; color: var(--text); }
+
+  .highlight-box {
+    background: var(--card); border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 12px 12px 0;
+    padding: 16px 20px; margin: 20px 0;
+    font-size: 13px; color: var(--muted); line-height: 1.7;
+  }
+  .highlight-box strong { color: var(--text); }
+
+  .data-table {
+    width: 100%; border-collapse: collapse; margin: 16px 0 20px;
+    font-size: 13px;
+  }
+  .data-table th {
+    background: var(--dark); color: #fff;
+    padding: 10px 14px; text-align: left;
+    font-size: 11px; letter-spacing: 1px; text-transform: uppercase;
+    font-weight: 600;
+  }
+  .data-table th:first-child { border-radius: 8px 0 0 0; }
+  .data-table th:last-child  { border-radius: 0 8px 0 0; }
+  .data-table td {
+    padding: 10px 14px; border-bottom: 1px solid var(--border);
+    color: #333; vertical-align: top;
+  }
+  .data-table tr:last-child td { border-bottom: none; }
+  .data-table tr:nth-child(even) td { background: rgba(0,0,0,.02); }
+
+  /* ── Footer ── */
+  footer {
+    background: var(--dark); color: rgba(255,255,255,.3);
+    padding: 28px 24px; text-align: center; font-size: 12px;
+  }
+  footer a { color: #b4dc00; text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
+  .footer-links { display: flex; gap: 20px; justify-content: center; margin-bottom: 10px; flex-wrap: wrap; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="header-logo">MY<span>VITALOG.</span></a>
+    <nav class="header-nav">
+      <a href="terms.html">Terms of Service</a>
+      <a href="index.html" class="cta">Sign In</a>
+    </nav>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">Legal</div>
+    <div class="hero-title">PRIVACY<br><span>POLICY.</span></div>
+    <div class="hero-meta">Last updated: March 2026 &nbsp;·&nbsp; Effective immediately</div>
+  </div>
+</div>
+
+<div class="content">
+
+  <div class="toc">
+    <div class="toc-title">Contents</div>
+    <ol>
+      <li><a href="#overview">Overview</a></li>
+      <li><a href="#data-collected">What Data We Collect</a></li>
+      <li><a href="#how-used">How We Use Your Data</a></li>
+      <li><a href="#storage">Data Storage & Security</a></li>
+      <li><a href="#sharing">Data Sharing</a></li>
+      <li><a href="#ai">AI Features & Third Parties</a></li>
+      <li><a href="#rights">Your Rights</a></li>
+      <li><a href="#children">Children's Privacy</a></li>
+      <li><a href="#changes">Changes to This Policy</a></li>
+      <li><a href="#contact">Contact Us</a></li>
+    </ol>
+  </div>
+
+  <section id="overview">
+    <div class="section-num">01</div>
+    <h2>OVERVIEW</h2>
+    <p>Vitalog ("we," "us," or "our") is a personal health and fitness tracking application accessible at myvitalog.com. We take your privacy seriously — especially because the data you log with us (meals, weight, sleep, mood, workouts) is personal and sensitive.</p>
+    <p>This Privacy Policy explains what information we collect, how we use it, and what control you have over it. By using Vitalog, you agree to the practices described here.</p>
+    <div class="highlight-box">
+      <strong>Plain English summary:</strong> Your health data belongs to you. We store it securely so you can access it across devices. We do not sell it, share it with advertisers, or use it to profile you. The only third party that touches your data is our secure cloud infrastructure provider.
+    </div>
+  </section>
+
+  <section id="data-collected">
+    <div class="section-num">02</div>
+    <h2>WHAT DATA WE COLLECT</h2>
+    <p>We collect two categories of information:</p>
+
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Data Type</th>
+          <th>Examples</th>
+          <th>Why Collected</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Account Data</strong></td>
+          <td>Email address, password (hashed), name</td>
+          <td>To create and secure your account</td>
+        </tr>
+        <tr>
+          <td><strong>Health & Fitness Data</strong></td>
+          <td>Food logs, calorie/macro entries, weight, sleep times, mood scores, journal notes, workout completions</td>
+          <td>Core app functionality — this is what you track</td>
+        </tr>
+        <tr>
+          <td><strong>Profile Data</strong></td>
+          <td>Height, age, gender (for BMI calculation)</td>
+          <td>To calculate BMI and personalize AI recommendations</td>
+        </tr>
+        <tr>
+          <td><strong>Usage Data</strong></td>
+          <td>Pages visited, features used, error logs</td>
+          <td>To fix bugs and improve the app</td>
+        </tr>
+        <tr>
+          <td><strong>Device Data</strong></td>
+          <td>Browser type, operating system</td>
+          <td>To ensure compatibility</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>We do <strong>not</strong> collect payment information (Vitalog is currently free). We do not collect location data. We do not use tracking pixels or advertising cookies.</p>
+  </section>
+
+  <section id="how-used">
+    <div class="section-num">03</div>
+    <h2>HOW WE USE YOUR DATA</h2>
+    <p>Your data is used exclusively to provide and improve Vitalog. Specifically:</p>
+    <ul>
+      <li>To display your logged data back to you across devices</li>
+      <li>To calculate summaries, trends, BMI, and macro totals</li>
+      <li>To power AI features — macro estimation, weekly summaries, and goal planning — by sending anonymized portions of your data to our AI provider (see Section 6)</li>
+      <li>To send you transactional emails (account confirmation, password reset)</li>
+      <li>To respond to support requests you submit through the Contact Us form</li>
+      <li>To debug technical issues and improve app reliability</li>
+    </ul>
+    <p>We do <strong>not</strong> use your data for advertising, profiling, or sale to third parties under any circumstances.</p>
+  </section>
+
+  <section id="storage">
+    <div class="section-num">04</div>
+    <h2>DATA STORAGE & SECURITY</h2>
+    <p>Your data is stored in <strong>Supabase</strong>, a SOC 2 Type II certified cloud database platform. All data is encrypted in transit (TLS) and at rest (AES-256). Your password is never stored in plain text — it is securely hashed using industry-standard algorithms.</p>
+    <p>Access to your data is protected by authentication. Only you, logged into your account, can view or modify your personal health records. Vitalog staff do not routinely access individual user data.</p>
+    <div class="highlight-box">
+      <strong>Data residency:</strong> Supabase stores data on servers located in the United States. If you are accessing Vitalog from outside the US, your data will be transferred to and stored in the US.
+    </div>
+    <p>We retain your data for as long as your account is active. If you delete your account or use the "Clear All Data" feature in Settings, your health data is permanently deleted from our systems within 30 days.</p>
+  </section>
+
+  <section id="sharing">
+    <div class="section-num">05</div>
+    <h2>DATA SHARING</h2>
+    <p>We do not sell, rent, or trade your personal information. We share data only in the following limited circumstances:</p>
+    <ul>
+      <li><strong>Supabase</strong> — our database and authentication provider. They store your data but have no right to use it independently.</li>
+      <li><strong>Anthropic</strong> — our AI provider (see Section 6 for full details).</li>
+      <li><strong>Legal requirements</strong> — if required by law, court order, or to protect the rights and safety of our users.</li>
+    </ul>
+    <p>We do not integrate with advertising networks, data brokers, or social media platforms.</p>
+  </section>
+
+  <section id="ai">
+    <div class="section-num">06</div>
+    <h2>AI FEATURES & THIRD PARTIES</h2>
+    <p>Vitalog uses AI features powered by <strong>Anthropic's Claude API</strong>. When you use these features — macro estimation, weekly summaries, or the AI goal planner — relevant portions of your health data are sent to Anthropic's servers to generate a response.</p>
+    <p>Specifically:</p>
+    <ul>
+      <li><strong>Macro Estimator:</strong> Sends only the food name you typed. No personal profile data is included.</li>
+      <li><strong>Weekly Summary:</strong> Sends a 7-day summary of your nutrition, sleep, weight, mood, and workout data along with your age, gender, height, and goals.</li>
+      <li><strong>AI Goal Planner:</strong> Sends your current weight, target weight, goal date, height, age, gender, and any notes you provide.</li>
+      <li><strong>AI Chat:</strong> Sends the text message you type. Your name and profile may be included for context.</li>
+    </ul>
+    <div class="highlight-box">
+      <strong>Important:</strong> Anthropic processes this data to generate your response and does not use it to train their models by default. For more details, see <a href="https://www.anthropic.com/privacy" target="_blank" style="color:var(--accent)">Anthropic's Privacy Policy</a>.
+    </div>
+    <p>You can choose not to use AI features at any time. All core tracking functionality works without them.</p>
+  </section>
+
+  <section id="rights">
+    <div class="section-num">07</div>
+    <h2>YOUR RIGHTS</h2>
+    <p>You have the following rights regarding your data:</p>
+    <ul>
+      <li><strong>Access:</strong> You can view all your data within the app at any time.</li>
+      <li><strong>Correction:</strong> You can edit any logged entry directly in the app.</li>
+      <li><strong>Deletion:</strong> Use "Clear All Data" in Settings to permanently delete all health data, or contact us to delete your account entirely.</li>
+      <li><strong>Portability:</strong> Contact us to request an export of your data in a machine-readable format.</li>
+      <li><strong>Opt-out of AI:</strong> Simply don't use the AI features — all data sent to Anthropic is triggered only by your explicit action.</li>
+    </ul>
+    <p>If you are a resident of California, you have additional rights under the CCPA, including the right to know what personal information is collected and the right to non-discrimination for exercising your privacy rights.</p>
+    <p>If you are a resident of the European Economic Area, you have rights under GDPR, including the right to object to processing and the right to lodge a complaint with your local supervisory authority.</p>
+    <p>To exercise any of these rights, contact us at the address in Section 10.</p>
+  </section>
+
+  <section id="children">
+    <div class="section-num">08</div>
+    <h2>CHILDREN'S PRIVACY</h2>
+    <p>Vitalog is not directed to children under the age of 13. We do not knowingly collect personal information from children under 13. If you believe a child under 13 has created an account, please contact us immediately and we will delete the account and associated data.</p>
+  </section>
+
+  <section id="changes">
+    <div class="section-num">09</div>
+    <h2>CHANGES TO THIS POLICY</h2>
+    <p>We may update this Privacy Policy as Vitalog evolves. When we make material changes, we will update the "Last updated" date at the top of this page and, where appropriate, notify you via email or an in-app notice.</p>
+    <p>Your continued use of Vitalog after any changes constitutes acceptance of the updated policy.</p>
+  </section>
+
+  <section id="contact">
+    <div class="section-num">10</div>
+    <h2>CONTACT US</h2>
+    <p>If you have questions about this Privacy Policy or want to exercise your data rights, you can reach us through the <strong>Contact Us</strong> form inside the Vitalog app (Settings → Contact Us), or by emailing us directly.</p>
+    <p>We aim to respond to all privacy-related inquiries within 5 business days.</p>
+    <div class="highlight-box">
+      <strong>Vitalog</strong><br>
+      myvitalog.com<br>
+      Contact via the in-app form in Settings → Contact Us
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  <div class="footer-links">
+    <a href="index.html">Sign In</a>
+    <a href="privacy.html">Privacy Policy</a>
+    <a href="terms.html">Terms of Service</a>
+  </div>
+  <div>© 2026 Vitalog. All rights reserved.</div>
+</footer>
+
+</body>
+</html>
