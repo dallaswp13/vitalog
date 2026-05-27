@@ -5,163 +5,146 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Privacy Policy — Vitalog</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏃</text></svg>">
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --bg: #f4f4f0; --card: #ffffff; --border: #e0e0dc;
-    --accent: #8a9e00; --accent2: #d94f1a;
-    --text: #1a1a1a; --muted: #777; --dark: #0f0f0f;
+  :root, html {
+    --bg:#1B1E22; --surface:#23262C; --surface-2:#2A2D33;
+    --ink:#E5E2DC; --ink-soft:#C9C6BF; --muted:#8A8E97;
+    --rule:rgba(229,226,220,.16); --rule-soft:rgba(229,226,220,.08);
+    --accent:#E07A52; --accent-ink:#1B1E22; --chip:rgba(229,226,220,.06);
   }
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body {
-    background: var(--bg); color: var(--text);
-    font-family: 'DM Sans', sans-serif; min-height: 100vh;
-    line-height: 1.7;
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{
+    background:var(--bg); color:var(--ink);
+    font-family:'Geist',ui-sans-serif,system-ui,sans-serif; font-weight:400;
+    -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+    min-height:100vh; line-height:1.7;
   }
-  body::before {
-    content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
-    opacity: .2;
-  }
+  ::selection{background:var(--accent);color:var(--accent-ink)}
+  a{color:inherit}
 
   /* ── Header ── */
-  header {
-    background: var(--dark); color: #fff;
-    padding: 0 24px;
-    position: sticky; top: 0; z-index: 100;
-    box-shadow: 0 2px 20px rgba(0,0,0,.2);
+  header{
+    background:color-mix(in oklab,var(--bg) 88%,transparent);
+    backdrop-filter:blur(14px);
+    border-bottom:.5px solid var(--rule-soft);
+    position:sticky; top:0; z-index:100; padding:0 24px;
   }
-  .header-inner {
-    max-width: 800px; margin: 0 auto;
-    display: flex; align-items: center; justify-content: space-between;
-    height: 56px;
+  .header-inner{
+    max-width:820px; margin:0 auto;
+    display:flex; align-items:center; justify-content:space-between; height:72px;
   }
-  .header-logo {
-    font-family: 'Bebas Neue'; font-size: 28px; line-height: 1;
-    text-decoration: none; color: #fff; letter-spacing: 1px;
+  .wordmark{
+    display:inline-flex; align-items:baseline; gap:0; text-decoration:none;
+    font-family:'Instrument Serif',serif; font-size:28px; line-height:1;
+    letter-spacing:-.015em; color:var(--ink);
   }
-  .header-logo span { color: #b4dc00; }
-  .header-nav { display: flex; gap: 16px; align-items: center; }
-  .header-nav a {
-    font-size: 12px; color: rgba(255,255,255,.5); text-decoration: none;
-    letter-spacing: .5px; transition: color .2s;
+  .wordmark .my{color:var(--accent);font-style:italic;margin-right:.08em}
+  .wordmark .vita{font-style:italic}
+  .wordmark .dot{color:var(--accent);margin-left:1px}
+  .header-nav{display:flex; gap:20px; align-items:center}
+  .header-nav a{
+    font-size:13px; color:var(--ink-soft); text-decoration:none; transition:color .2s;
   }
-  .header-nav a:hover { color: #b4dc00; }
-  .header-nav .cta {
-    background: #b4dc00; color: #000; font-weight: 700;
-    padding: 7px 16px; border-radius: 8px; font-size: 12px;
-    letter-spacing: .5px;
+  .header-nav a:hover{color:var(--ink)}
+  .header-nav .cta{
+    background:var(--ink); color:var(--bg);
+    padding:9px 18px; border-radius:999px; font-size:13px; font-weight:500;
+    border:.5px solid var(--ink); transition:background .2s,color .2s,border-color .2s;
   }
-  .header-nav .cta:hover { filter: brightness(1.1); color: #000; }
+  .header-nav .cta:hover{background:var(--accent); color:var(--accent-ink); border-color:var(--accent)}
 
-  /* ── Hero banner ── */
-  .hero {
-    background: var(--dark); color: #fff;
-    padding: 52px 24px 44px;
-    border-bottom: 1px solid rgba(255,255,255,.06);
+  /* ── Hero ── */
+  .hero{
+    background:var(--bg); border-bottom:.5px solid var(--rule-soft);
+    padding:72px 24px 56px;
   }
-  .hero-inner { max-width: 800px; margin: 0 auto; }
-  .hero-eyebrow {
-    font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
-    color: #b4dc00; font-weight: 700; margin-bottom: 10px;
+  .hero-inner{max-width:820px; margin:0 auto}
+  .hero-eyebrow{
+    font-family:'JetBrains Mono',ui-monospace,monospace;
+    font-size:11px; letter-spacing:.14em; text-transform:uppercase;
+    color:var(--muted); font-weight:500; margin-bottom:18px;
   }
-  .hero-title {
-    font-family: 'Bebas Neue'; font-size: 56px; line-height: .9;
-    letter-spacing: 1px; margin-bottom: 12px;
+  .hero-title{
+    font-family:'Instrument Serif',serif; font-weight:400;
+    font-size:clamp(48px,7vw,76px); line-height:.98; letter-spacing:-.02em; margin-bottom:18px;
   }
-  .hero-title span { color: #b4dc00; }
-  .hero-meta {
-    font-size: 13px; color: rgba(255,255,255,.35);
+  .hero-title em, .hero-title span{font-style:italic; color:var(--accent)}
+  .hero-meta{
+    font-family:'JetBrains Mono',monospace; font-size:12px;
+    letter-spacing:.04em; color:var(--muted);
   }
 
   /* ── Content ── */
-  .content {
-    max-width: 800px; margin: 0 auto;
-    padding: 48px 24px 80px;
-    position: relative; z-index: 1;
+  .content{max-width:820px; margin:0 auto; padding:56px 24px 96px}
+  .toc{
+    background:var(--surface); border:.5px solid var(--rule-soft);
+    border-radius:18px; padding:26px 30px; margin-bottom:48px;
   }
-  .toc {
-    background: var(--card); border: 1px solid var(--border);
-    border-radius: 16px; padding: 24px 28px; margin-bottom: 40px;
+  .toc-title{
+    font-family:'JetBrains Mono',monospace; font-size:11px;
+    letter-spacing:.14em; text-transform:uppercase; color:var(--muted); margin-bottom:16px;
   }
-  .toc-title {
-    font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
-    color: var(--muted); font-weight: 600; margin-bottom: 14px;
-  }
-  .toc ol {
-    padding-left: 18px; display: flex; flex-direction: column; gap: 6px;
-  }
-  .toc a {
-    font-size: 13px; color: var(--accent); text-decoration: none;
-    transition: opacity .2s;
-  }
-  .toc a:hover { opacity: .7; }
+  .toc ol{padding-left:18px; display:flex; flex-direction:column; gap:8px}
+  .toc a{font-size:14px; color:var(--ink-soft); text-decoration:none; transition:color .2s}
+  .toc a:hover{color:var(--accent)}
 
-  section {
-    margin-bottom: 44px; scroll-margin-top: 72px;
+  section{margin-bottom:52px; scroll-margin-top:90px}
+  .section-num{
+    font-family:'JetBrains Mono',monospace; font-size:11px;
+    letter-spacing:.14em; text-transform:uppercase; color:var(--accent);
+    font-weight:500; margin-bottom:10px;
   }
-  .section-num {
-    font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
-    color: var(--accent); font-weight: 700; margin-bottom: 6px;
+  h2{
+    font-family:'Instrument Serif',serif; font-weight:400;
+    font-size:34px; letter-spacing:-.01em; line-height:1.05; margin-bottom:18px; color:var(--ink);
   }
-  h2 {
-    font-family: 'Bebas Neue'; font-size: 32px; letter-spacing: .5px;
-    line-height: 1; margin-bottom: 16px; color: var(--text);
-  }
-  p { font-size: 14px; color: #333; margin-bottom: 14px; }
-  ul, ol {
-    padding-left: 20px; margin-bottom: 14px;
-    display: flex; flex-direction: column; gap: 6px;
-  }
-  li { font-size: 14px; color: #333; }
-  strong { font-weight: 600; color: var(--text); }
+  p{font-size:15px; color:var(--ink-soft); margin-bottom:15px}
+  ul,ol{padding-left:20px; margin-bottom:15px; display:flex; flex-direction:column; gap:8px}
+  li{font-size:15px; color:var(--ink-soft)}
+  strong{font-weight:600; color:var(--ink)}
 
-  .highlight-box {
-    background: var(--card); border: 1px solid var(--border);
-    border-left: 3px solid var(--accent);
-    border-radius: 0 12px 12px 0;
-    padding: 16px 20px; margin: 20px 0;
-    font-size: 13px; color: var(--muted); line-height: 1.7;
+  .highlight-box{
+    background:var(--surface); border:.5px solid var(--rule-soft);
+    border-left:2px solid var(--accent); border-radius:0 12px 12px 0;
+    padding:18px 22px; margin:22px 0; font-size:14px; color:var(--ink-soft); line-height:1.7;
   }
-  .highlight-box strong { color: var(--text); }
+  .highlight-box strong{color:var(--ink)}
 
-  .data-table {
-    width: 100%; border-collapse: collapse; margin: 16px 0 20px;
-    font-size: 13px;
+  .data-table{width:100%; border-collapse:collapse; margin:18px 0 22px; font-size:14px}
+  .data-table th{
+    background:var(--surface-2); color:var(--ink-soft);
+    padding:11px 15px; text-align:left;
+    font-family:'JetBrains Mono',monospace; font-size:10px;
+    letter-spacing:.1em; text-transform:uppercase; font-weight:500;
+    border-bottom:.5px solid var(--rule);
   }
-  .data-table th {
-    background: var(--dark); color: #fff;
-    padding: 10px 14px; text-align: left;
-    font-size: 11px; letter-spacing: 1px; text-transform: uppercase;
-    font-weight: 600;
-  }
-  .data-table th:first-child { border-radius: 8px 0 0 0; }
-  .data-table th:last-child  { border-radius: 0 8px 0 0; }
-  .data-table td {
-    padding: 10px 14px; border-bottom: 1px solid var(--border);
-    color: #333; vertical-align: top;
-  }
-  .data-table tr:last-child td { border-bottom: none; }
-  .data-table tr:nth-child(even) td { background: rgba(0,0,0,.02); }
+  .data-table th:first-child{border-radius:10px 0 0 0}
+  .data-table th:last-child{border-radius:0 10px 0 0}
+  .data-table td{padding:12px 15px; border-bottom:.5px solid var(--rule-soft); color:var(--ink-soft); vertical-align:top}
+  .data-table tr:last-child td{border-bottom:none}
+  .data-table tr:nth-child(even) td{background:rgba(229,226,220,.025)}
 
   /* ── Footer ── */
-  footer {
-    background: var(--dark); color: rgba(255,255,255,.3);
-    padding: 28px 24px; text-align: center; font-size: 12px;
+  footer{
+    background:var(--bg); border-top:.5px solid var(--rule-soft);
+    color:var(--muted); padding:32px 24px; text-align:center; font-size:13px;
   }
-  footer a { color: #b4dc00; text-decoration: none; }
-  footer a:hover { text-decoration: underline; }
-  .footer-links { display: flex; gap: 20px; justify-content: center; margin-bottom: 10px; flex-wrap: wrap; }
+  footer a{color:var(--ink-soft); text-decoration:none; transition:color .2s}
+  footer a:hover{color:var(--accent)}
+  .footer-links{display:flex; gap:24px; justify-content:center; margin-bottom:12px; flex-wrap:wrap}
 </style>
 </head>
 <body>
 
 <header>
   <div class="header-inner">
-    <a href="index.html" class="header-logo">MY<span>VITALOG.</span></a>
+    <a href="index.html" class="wordmark" aria-label="myVitalog home"><span class="my">my</span><span class="vita">Vita</span><span>log</span><span class="dot">.</span></a>
     <nav class="header-nav">
       <a href="terms.html">Terms of Service</a>
-      <a href="index.html" class="cta">Sign In</a>
+      <a href="login.html" class="cta">Sign in</a>
     </nav>
   </div>
 </header>
@@ -169,7 +152,7 @@
 <div class="hero">
   <div class="hero-inner">
     <div class="hero-eyebrow">Legal</div>
-    <div class="hero-title">PRIVACY<br><span>POLICY.</span></div>
+    <div class="hero-title">Privacy<br><em>Policy.</em></div>
     <div class="hero-meta">Last updated: March 2026 &nbsp;·&nbsp; Effective immediately</div>
   </div>
 </div>
@@ -347,7 +330,7 @@
 
 <footer>
   <div class="footer-links">
-    <a href="index.html">Sign In</a>
+    <a href="login.html">Sign in</a>
     <a href="privacy.html">Privacy Policy</a>
     <a href="terms.html">Terms of Service</a>
   </div>
