@@ -186,13 +186,15 @@ function buildLive(store, session, base) {
   window.__VITALOG_SUPP_IDS = suppIds;
 
   // Self-care
-  var scList = store['selfcareList'], selfCare;
+  var scList = store['selfcareList'], selfCare, scIds = null;
   if (Array.isArray(scList) && scList.length) {
     var scLog = store['sclog:' + dKey(0)] || {};
+    scIds = scList.map(function (x) { return x.id; });
     selfCare = scList.map(function (x) { return { name: x.name, time: x.time || '', done: !!scLog[x.id] }; });
   } else {
     selfCare = base.selfCare || [];
   }
+  window.__VITALOG_SC_IDS = scIds;
 
   // Biometrics — overlay the weight metric with real values, keep the rest as sample
   var biometrics = (base.biometrics || []).map(function (b) {
@@ -250,7 +252,7 @@ function buildLive(store, session, base) {
         ? { hours: +((num(sl.mins)) / 60).toFixed(1), quality: num(sl.quality), bedtime: sl.bed || '', wake: sl.wake || '' }
         : (base.today && base.today.sleepLast) || { hours: 0, quality: 0, bedtime: '', wake: '' },
       mood: jt0.mood || ((base.today && base.today.mood) || 0),
-      energy: (base.today && base.today.energy) || 0,
+      energy: (function () { var ev = store['energy:' + dKey(0)]; return ev != null ? num(ev) : ((base.today && base.today.energy) || 0); })(),
       streakDays: streak
     },
     meals: foods(0).map(function (f) {

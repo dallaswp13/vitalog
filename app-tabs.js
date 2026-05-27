@@ -661,7 +661,7 @@ function renderSleep(d) {
           <div class="mono" style="font-size:10px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;margin-bottom:10px">Mood</div>
           <div class="mood-row">
             ${['Low','Okay','Good','Great','Best'].map((l, i) => `
-              <button class="mood-seg ${i === t.mood ? 'on' : ''}">${l}</button>
+              <button class="mood-seg ${i === (t.mood - 1) ? 'on' : ''}" data-mood="${i + 1}">${l}</button>
             `).join('')}
           </div>
         </div>
@@ -670,7 +670,7 @@ function renderSleep(d) {
           <div class="mono" style="font-size:10px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;margin-bottom:10px">Energy</div>
           <div class="mood-row">
             ${['Low','Okay','Good','Great','Best'].map((l, i) => `
-              <button class="mood-seg ${i === t.energy ? 'on' : ''}">${l}</button>
+              <button class="mood-seg ${i === (t.energy - 1) ? 'on' : ''}" data-energy="${i + 1}">${l}</button>
             `).join('')}
           </div>
         </div>
@@ -830,7 +830,7 @@ function renderSupplements(d) {
         <h3 class="card-title" style="margin:10px 0 18px">Routine.</h3>
         ${d.selfCare.map((s, i) => `
           <label class="supp-card">
-            <input type="checkbox" ${s.done ? 'checked' : ''} />
+            <input type="checkbox" ${s.done ? 'checked' : ''} data-selfcare="${i}" />
             <span class="check"></span>
             <div style="flex:1">
               <div class="name" style="${s.done ? 'color:var(--muted);text-decoration:line-through' : ''}">${escapeHtml(s.name)}</div>
@@ -1065,7 +1065,7 @@ function renderJournal(d) {
           </div>
           <span class="mono" style="font-size:11px;color:var(--muted)">Saved · 07:18</span>
         </div>
-        <textarea class="journal-area" placeholder="What's on your mind?">${escapeHtml(d.journalToday.morning)}</textarea>
+        <textarea class="journal-area" data-journal="morning" placeholder="What's on your mind?">${escapeHtml(d.journalToday.morning)}</textarea>
       </div>
       <div class="card span-4">
         <div class="card-head">
@@ -1074,7 +1074,7 @@ function renderJournal(d) {
             <h3 class="card-title">Last night.</h3>
           </div>
         </div>
-        <textarea class="journal-area" placeholder="Any dreams to capture?">${escapeHtml(d.journalToday.dream)}</textarea>
+        <textarea class="journal-area" data-journal="dream" placeholder="Any dreams to capture?">${escapeHtml(d.journalToday.dream)}</textarea>
       </div>
     </section>
 
@@ -1119,150 +1119,130 @@ function renderJournal(d) {
 // ──────────────────────────────────────────────────────────────
 
 function renderSettings(d) {
+  const g = d.user.goals || {};
+  const s = (window.__VITALOG_STORE && window.__VITALOG_STORE.settings) || {};
+  const conds = d.user.conditions || [];
+  const features = s.features || {};
+  const mode = s.mode || 'dark';
+
+  const NAV = [
+    ['Profile','profile'], ['Goals','goals'], ['Conditions','conditions'],
+    ['Features','features'], ['Appearance','appearance'], ['Body targets','body-targets'],
+    ['Devices','devices'], ['Export data','export-data'], ['Sign out','signout']
+  ];
+  const fld = (label, key, value, type) =>
+    `<div class="field"><label>${label}</label><div class="input-wrap">` +
+    `<input type="${type || 'text'}" value="${escapeHtml(String(value == null ? '' : value))}" data-setting="${key}"${type === 'number' ? ' inputmode="decimal"' : ''} /></div></div>`;
+
+  const ALL_CONDS = ['Diabetes','Hypertension','Celiac','Lactose Intolerance','Nut Allergy','Vegan','Vegetarian','Keto','IBS',"Crohn's",'Thyroid','Heart Disease','GERD','High Cholesterol','Anxiety','Depression','ADHD','PCOS','Osteoporosis','Arthritis','Asthma','Migraines','Sleep Apnea','Low Iron'];
+  const FEATURES = ['Diet & nutrition','Exercise & PRs','Sleep','Biometrics','Supplements','Self care','Journal','Metrics','Locations','Period tracker','Poop tracker','Intimacy tracker','Party favors'];
+  const featOn = (l) => features[l] !== undefined ? !!features[l] : !/Period|Poop|Intimacy|Party/.test(l);
+
   return `
-  <div class="page-fade-in" style="display:grid;grid-template-columns:200px 1fr;gap:36px">
-    <aside style="position:sticky;top:108px;height:fit-content;display:flex;flex-direction:column;gap:2px">
-      ${['Profile','Goals','Features','Appearance','Conditions','Body targets','Devices','Export data','Sign out'].map((s, i) => `
-        <button class="settings-link ${i === 0 ? 'active' : ''}">${s}</button>
-      `).join('')}
+  <div class="page-fade-in settings-wrap">
+    <aside class="settings-nav">
+      ${NAV.map(([label, pane], i) => `<button class="settings-link ${i === 0 ? 'active' : ''}" data-pane="${pane}">${label}</button>`).join('')}
     </aside>
-    <main class="rise-stagger" style="display:flex;flex-direction:column;gap:24px">
+    <main class="settings-main">
 
-      <section class="card">
-        <div class="card-head">
-          <div>
-            <span class="eyebrow">Profile</span>
-            <h3 class="card-title">About you.</h3>
-          </div>
+      <section class="card settings-pane active" data-pane="profile">
+        <div class="card-head"><div><span class="eyebrow">Profile</span><h3 class="card-title">About you.</h3></div></div>
+        <div class="settings-grid-2">
+          ${fld('Name', 'name', d.user.name)}
+          <div class="field"><label>Email</label><div class="input-wrap"><input type="text" value="${escapeHtml(String(d.user.email || ''))}" readonly /></div></div>
+          ${fld('Age', 'age', s.age || '', 'number')}
+          ${fld('Height', 'height', s.height || '')}
+          ${fld('Gender', 'gender', s.gender || '')}
+          ${fld('Timezone', 'timezone', s.timezone || 'America/Chicago')}
         </div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px">
-          ${textField('Name', d.user.name)}
-          ${textField('Email', d.user.email)}
-          ${textField('Age', '32')}
-          ${textField('Height', '5\'11"')}
-          ${textField('Gender', 'Male')}
-          ${textField('Timezone', 'America/Chicago')}
+        <p class="settings-hint">Email is managed by your sign-in and can't be changed here.</p>
+      </section>
+
+      <section class="card settings-pane" data-pane="goals">
+        <div class="card-head"><div><span class="eyebrow">Daily goals</span><h3 class="card-title">Targets.</h3></div></div>
+        <div class="settings-grid-3">
+          ${fld('Calories', 'calGoal', g.kcal, 'number')}
+          ${fld('Protein (g)', 'protGoal', g.protein, 'number')}
+          ${fld('Carbs (g)', 'carbGoal', g.carbs, 'number')}
+          ${fld('Fat (g)', 'fatGoal', g.fat, 'number')}
+          ${fld('Water (oz)', 'waterGoal', g.water, 'number')}
+          ${fld('Weight (lb)', 'weightGoal', g.weight, 'number')}
+        </div>
+        <p class="settings-hint">Goals feed the rings on your dashboard.</p>
+      </section>
+
+      <section class="card settings-pane" data-pane="conditions">
+        <div class="card-head"><div><span class="eyebrow">Conditions &amp; sensitivities</span><h3 class="card-title">What we account for.</h3></div></div>
+        <div class="chip-wrap">
+          ${ALL_CONDS.map((c) => `<button class="chip ${conds.includes(c) ? 'accent' : ''}" data-cond="${escapeHtml(c)}">${c}</button>`).join('')}
         </div>
       </section>
 
-      <section class="card">
-        <div class="card-head">
-          <div>
-            <span class="eyebrow">Daily goals</span>
-            <h3 class="card-title">Targets.</h3>
-          </div>
+      <section class="card settings-pane" data-pane="features">
+        <div class="card-head"><div><span class="eyebrow">Features</span><h3 class="card-title">Show or hide tabs.</h3></div></div>
+        <div class="settings-grid-2">
+          ${FEATURES.map((l) => `<label class="toggle-row" data-feature="${escapeHtml(l)}"><span>${l}</span><span class="toggle ${featOn(l) ? 'on' : ''}"><i></i></span></label>`).join('')}
         </div>
-        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:18px">
-          ${textField('Calories', d.user.goals.kcal)}
-          ${textField('Protein (g)', d.user.goals.protein)}
-          ${textField('Carbs (g)', d.user.goals.carbs)}
-          ${textField('Fat (g)', d.user.goals.fat)}
-          ${textField('Water (oz)', d.user.goals.water)}
-          ${textField('Weight (lb)', d.user.goals.weight)}
-        </div>
+        <p class="settings-hint">Turning a feature off hides its tab in the sidebar.</p>
       </section>
 
-      <section class="card">
-        <div class="card-head">
-          <div>
-            <span class="eyebrow">Conditions &amp; sensitivities</span>
-            <h3 class="card-title">What the AI accounts for.</h3>
-          </div>
+      <section class="card settings-pane" data-pane="appearance">
+        <div class="card-head"><div><span class="eyebrow">Appearance</span><h3 class="card-title">Theme.</h3></div></div>
+        <div class="chip-wrap">
+          ${[['System', 'system'], ['Light', 'light'], ['Dark', 'dark']].map(([l, v]) => `<button class="chip ${mode === v ? 'accent' : ''}" data-mode-set="${v}">${l}</button>`).join('')}
         </div>
-        <div style="display:flex;flex-wrap:wrap;gap:6px">
-          ${['Diabetes','Hypertension','Celiac','Lactose Intolerance','Nut Allergy','Vegan','Vegetarian','Keto','IBS','Crohn\'s','Thyroid','Heart Disease','GERD','High Cholesterol','Anxiety','Depression','ADHD','PCOS','Osteoporosis','Arthritis','Asthma','Migraines','Sleep Apnea','Low Iron'].map((c) => `
-            <button class="chip ${d.user.conditions.includes(c) ? 'accent' : ''}">${c}</button>
-          `).join('')}
-        </div>
+        <p class="settings-hint">Light uses the warm bone palette; dark is the default mist.</p>
       </section>
 
-      <section class="card">
-        <div class="card-head">
-          <div>
-            <span class="eyebrow">Features</span>
-            <h3 class="card-title">Show or hide tabs.</h3>
-          </div>
+      <section class="card settings-pane" data-pane="body-targets">
+        <div class="card-head"><div><span class="eyebrow">Body targets</span><h3 class="card-title">Measurements.</h3></div></div>
+        <div class="settings-grid-3">
+          ${fld('Goal weight (lb)', 'weightGoal', g.weight, 'number')}
+          ${fld('Waist target (in)', 'waistTarget', s.waistTarget || '', 'number')}
+          ${fld('Body fat target (%)', 'bodyFatTarget', s.bodyFatTarget || '', 'number')}
         </div>
-        <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:14px">
-          ${[
-            ['Diet & nutrition', true],
-            ['Exercise & PRs', true],
-            ['Sleep', true],
-            ['Biometrics', true],
-            ['Supplements', true],
-            ['Self care', true],
-            ['Journal', true],
-            ['Metrics', true],
-            ['Period tracker', false],
-            ['Poop tracker', false],
-            ['Intimacy tracker', false],
-            ['Party favors', false],
-          ].map(([l, on]) => `
-            <label class="toggle-row">
-              <span>${l}</span>
-              <span class="toggle ${on ? 'on' : ''}"><i></i></span>
-            </label>
-          `).join('')}
-        </div>
+        <p class="settings-hint">Saved alongside your goals.</p>
       </section>
 
-      <section class="card">
-        <div class="card-head">
-          <div>
-            <span class="eyebrow">Appearance</span>
-            <h3 class="card-title">Theme.</h3>
-          </div>
-        </div>
-        <div style="display:flex;gap:10px">
-          ${['System','Light','Dark'].map((m, i) => `
-            <button class="chip ${i === 2 ? 'accent' : ''}">${m}</button>
-          `).join('')}
-        </div>
+      <section class="card settings-pane" data-pane="devices">
+        <div class="card-head"><div><span class="eyebrow">Devices</span><h3 class="card-title">Connected.</h3></div></div>
+        <p class="settings-hint">No wearables are connected yet. HRV and resting-heart-rate trends fall back to sample data until a device is linked.</p>
+      </section>
+
+      <section class="card settings-pane" data-pane="export-data">
+        <div class="card-head"><div><span class="eyebrow">Export data</span><h3 class="card-title">Your data, downloadable.</h3></div></div>
+        <p class="settings-hint">Download everything you've logged as a JSON file you can keep or move elsewhere.</p>
+        <button class="btn btn-primary btn-sm" data-act="export-data" style="width:auto;align-self:flex-start;margin-top:8px">Download my data (.json)</button>
       </section>
 
     </main>
   </div>
   <style>
-    .settings-link{
-      appearance:none;border:0;background:transparent;text-align:left;
-      padding:9px 12px;border-radius:8px;cursor:pointer;
-      color:var(--ink-soft);font-size:13.5px;font-weight:400;
-      transition:background .18s ease, color .18s ease;
-    }
+    .settings-wrap{display:grid;grid-template-columns:200px 1fr;gap:36px}
+    .settings-nav{position:sticky;top:108px;height:fit-content;display:flex;flex-direction:column;gap:2px}
+    .settings-main{display:flex;flex-direction:column;gap:24px}
+    .settings-pane{display:none}
+    .settings-pane.active{display:block}
+    .settings-grid-2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+    .settings-grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    .chip-wrap{display:flex;flex-wrap:wrap;gap:6px}
+    .settings-hint{font-size:12.5px;color:var(--muted);margin-top:14px;line-height:1.5}
+    .settings-link{appearance:none;border:0;background:transparent;text-align:left;padding:9px 12px;border-radius:8px;cursor:pointer;color:var(--ink-soft);font-size:13.5px;font-weight:400;transition:background .18s ease,color .18s ease}
     .settings-link:hover{background:var(--chip);color:var(--ink)}
     .settings-link.active{background:var(--surface);color:var(--ink);font-weight:500}
-    .toggle-row{
-      display:flex;align-items:center;justify-content:space-between;
-      padding:14px 16px;border-radius:10px;
-      background:var(--surface-2);font-size:14px;color:var(--ink);
-      cursor:pointer;
-      transition:background .15s ease;
-    }
+    .toggle-row{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-radius:10px;background:var(--surface-2);font-size:14px;color:var(--ink);cursor:pointer;transition:background .15s ease}
     .toggle-row:hover{background:var(--surface-3)}
-    .toggle{
-      width:36px;height:20px;border-radius:999px;background:var(--rule);
-      position:relative;flex-shrink:0;
-      transition:background .2s ease;
-    }
-    .toggle i{
-      position:absolute;top:2px;left:2px;
-      width:16px;height:16px;border-radius:50%;background:var(--ink);
-      transition:transform .25s cubic-bezier(.3,.7,.2,1);
-    }
+    .toggle{width:36px;height:20px;border-radius:999px;background:var(--rule);position:relative;flex-shrink:0;transition:background .2s ease}
+    .toggle i{position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:var(--ink);transition:transform .25s cubic-bezier(.3,.7,.2,1)}
     .toggle.on{background:var(--accent)}
     .toggle.on i{transform:translateX(16px);background:var(--accent-ink)}
+    @media (max-width:860px){
+      .settings-wrap{grid-template-columns:1fr}
+      .settings-nav{flex-direction:row;overflow-x:auto;gap:4px;position:static;padding-bottom:6px}
+      .settings-link{white-space:nowrap}
+      .settings-grid-2,.settings-grid-3{grid-template-columns:1fr}
+    }
   </style>
-  `;
-}
-
-function textField(label, value) {
-  return `
-    <div class="field">
-      <label>${label}</label>
-      <div class="input-wrap">
-        <input type="text" value="${escapeHtml(String(value))}" />
-      </div>
-    </div>
   `;
 }
 

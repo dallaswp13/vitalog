@@ -705,3 +705,17 @@ textarea{font-family:inherit}
   .loc-band-head{padding:18px 16px 12px}
   .loc-band-body{padding:6px 14px 14px}
 }
+
+
+/* ============================================================
+   Light theme (Appearance → Light / System) — warm "bone" palette
+   ============================================================ */
+html[data-mode="light"]{
+  --bg:#F4EFE4; --surface:#EFE9DB; --surface-2:#E8E1D2; --surface-3:#E0D8C6;
+  --ink:#1A1814; --ink-soft:#3F3A30; --muted:#6F6857;
+  --rule:rgba(26,24,20,.18); --rule-soft:rgba(26,24,20,.10);
+  --accent:#2D4A3E; --accent-soft:rgba(45,74,62,.16); --accent-ink:#F4EFE4;
+  --chip:rgba(26,24,20,.05);
+  --pos:#3E6B4E; --neg:#B5502E; --warn:#9A7B3A;
+}
+html[data-mode="light"], html[data-mode="light"] body{background:var(--bg)}
