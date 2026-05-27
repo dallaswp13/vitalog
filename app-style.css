@@ -650,3 +650,58 @@ textarea{font-family:inherit}
   .crumb-eyebrow{display:none}
   .date-nav{display:none}
 }
+
+
+/* ============================================================
+   Locations tab (added)
+   ============================================================ */
+.loc-wrap{display:flex;flex-direction:column;gap:20px}
+.loc-setup .card-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.loc-form{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
+.loc-input{flex:1;min-width:240px;height:48px;padding:0 16px;background:var(--surface-2);border:.5px solid var(--rule-soft);border-radius:var(--radius-input);color:var(--ink);font-family:inherit;font-size:15px}
+.loc-name{width:170px;height:48px;padding:0 16px;background:var(--surface-2);border:.5px solid var(--rule-soft);border-radius:var(--radius-input);color:var(--ink);font-family:inherit;font-size:15px}
+.loc-input::placeholder,.loc-name::placeholder{color:var(--muted)}
+.loc-input:focus,.loc-name:focus{outline:none;border-color:var(--accent)}
+.loc-homecheck{display:flex;align-items:center;gap:7px;font-size:13px;color:var(--ink-soft);white-space:nowrap}
+.loc-homecheck input{accent-color:var(--accent);width:16px;height:16px}
+.loc-err{margin-top:12px;padding:10px 14px;border-radius:10px;font-size:13px;background:rgba(224,122,82,.10);border:.5px solid rgba(224,122,82,.4);color:#E89B7C}
+.loc-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.loc-chip{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:var(--radius-pill);background:var(--chip);border:.5px solid var(--rule-soft);color:var(--ink-soft);font-size:13px;cursor:pointer;transition:color .18s ease,border-color .18s ease,background .18s ease}
+.loc-chip:hover{color:var(--ink);border-color:var(--rule)}
+.loc-chip.active{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.loc-home-dot{width:6px;height:6px;border-radius:50%;background:var(--accent)}
+.loc-chip-name{font-weight:500}
+.loc-chip-x{margin-left:2px;color:var(--muted);font-size:15px;line-height:1;padding:0 2px;border-radius:50%}
+.loc-chip-x:hover{color:#E89B7C}
+.loc-chip.active .loc-chip-x{color:var(--bg)}
+.loc-refresh{height:38px;padding:0 16px;font-size:13px;width:auto}
+
+.loc-active{margin:2px 2px;font-size:12px;color:var(--muted);letter-spacing:.02em}
+.loc-active strong{color:var(--ink-soft)}
+
+.loc-band{padding:0;overflow:hidden}
+.loc-band-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;padding:22px 24px 14px;border-bottom:.5px solid var(--rule-soft)}
+.loc-band-title{font-size:24px;letter-spacing:-.01em;margin:0}
+.loc-band-note{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+.loc-band-body{padding:8px 24px 18px}
+.loc-group{padding:10px 0}
+.loc-group + .loc-group{border-top:.5px solid var(--rule-soft)}
+.loc-group-h{margin:6px 0 6px}
+.loc-place{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:11px 12px;border-radius:12px;text-decoration:none;color:inherit;transition:background .15s ease}
+.loc-place:hover{background:var(--chip)}
+.loc-place-name{font-size:15px;color:var(--ink);font-weight:500}
+.loc-place-sub{font-size:12px;color:var(--muted);margin-top:2px}
+.loc-place-dist{text-align:right;font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--ink-soft);white-space:nowrap}
+.loc-place-dist span{display:block;font-size:10px;color:var(--muted);margin-top:2px;font-family:inherit}
+.loc-none{padding:12px 2px;color:var(--muted);font-size:13px}
+.loc-empty{padding:30px 24px;text-align:center}
+.loc-empty-h{font-size:26px;margin-bottom:10px;color:var(--ink)}
+.loc-empty p{color:var(--ink-soft);font-size:14px;max-width:54ch;margin:0 auto;line-height:1.6}
+.loc-status{padding:22px 4px;color:var(--ink-soft);font-size:14px}
+.loc-status-err{color:#E89B7C}
+
+@media (max-width:760px){
+  .loc-name{width:100%}
+  .loc-band-head{padding:18px 16px 12px}
+  .loc-band-body{padding:6px 14px 14px}
+}

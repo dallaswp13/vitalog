@@ -40,10 +40,12 @@
           content.style.transform = '';
         });
         afterRender();
+        if (typeof tab.init === 'function') { try { tab.init(content, getData()); } catch (e) { console.warn('[tab init]', e); } }
       }, 120);
     } else {
       content.innerHTML = tab.render(getData());
       afterRender();
+        if (typeof tab.init === 'function') { try { tab.init(content, getData()); } catch (e) { console.warn('[tab init]', e); } }
     }
 
     // Update URL hash (no scroll)
