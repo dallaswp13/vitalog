@@ -22,7 +22,7 @@
 
 ---
 
-## 🌟 What is Vitalog?
+## 🌟 What is myVitalog?
 
 Vitalog is a **full-featured personal health tracker** built as a progressive web app (PWA). It combines AI-powered natural language logging with detailed manual tracking across every dimension of personal health — all without subscriptions, ads, or data harvesting.
 
