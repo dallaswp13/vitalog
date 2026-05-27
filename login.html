@@ -1,0 +1,627 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>myVitalog — Sign in</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏃</text></svg>">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    *,*::before,*::after{box-sizing:border-box}
+    html,body{margin:0;padding:0;background:#1B1E22}
+    html{
+      --bg:#1B1E22;--surface:#23262C;--surface-2:#2A2D33;
+      --ink:#E5E2DC;--ink-soft:#C9C6BF;
+      --muted:#8A8E97;
+      --rule:rgba(229,226,220,.16);--rule-soft:rgba(229,226,220,.08);
+      --accent:#E07A52;--accent-ink:#1B1E22;
+      --chip:rgba(229,226,220,.06);
+    }
+    body{
+      font-family:'Geist',ui-sans-serif,system-ui,sans-serif;
+      font-weight:400;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      background:var(--bg);
+      color:var(--ink);
+      min-height:100vh;
+      display:flex;flex-direction:column;
+    }
+
+    a{color:inherit;text-decoration:none}
+    button{font-family:inherit}
+    ::selection{background:var(--accent);color:var(--accent-ink)}
+
+    .serif{font-family:'Instrument Serif',ui-serif,Georgia,serif;font-weight:400}
+    .mono{font-family:'JetBrains Mono',ui-monospace,monospace}
+    .eyebrow{
+      font-family:'JetBrains Mono',ui-monospace,monospace;
+      font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+      color:var(--muted);font-weight:500;
+    }
+
+    /* ===== Page chrome ===== */
+    .page-nav{
+      display:flex;align-items:center;justify-content:space-between;
+      padding:24px max(24px,4vw);
+      border-bottom:.5px solid var(--rule-soft);
+    }
+    .page-nav a{font-size:13px;color:var(--ink-soft)}
+    .page-nav a:hover{color:var(--ink)}
+
+    .wordmark{
+      display:inline-flex;align-items:baseline;gap:0;
+      font-family:'Instrument Serif',serif;
+      font-size:32px;line-height:1;letter-spacing:-.015em;
+      color:var(--ink);
+    }
+    .wordmark .my{color:var(--accent);font-style:italic;margin-right:.08em}
+    .wordmark .vita{font-style:italic}
+    .wordmark .dot{color:var(--accent);margin-left:1px}
+
+    /* ===== Layout ===== */
+    main{
+      flex:1;
+      display:grid;
+      grid-template-columns:1.05fr .95fr;
+      min-height:0;
+    }
+    @media (max-width:900px){
+      main{grid-template-columns:1fr}
+      .pane-marketing{display:none}
+    }
+
+    /* Left pane — marketing */
+    .pane-marketing{
+      padding:60px max(40px,5vw);
+      display:flex;flex-direction:column;
+      gap:48px;
+      border-right:.5px solid var(--rule-soft);
+      position:relative;
+      overflow:hidden;
+    }
+    .display{
+      font-family:'Instrument Serif',serif;
+      font-weight:400;line-height:.95;letter-spacing:-.025em;
+      font-size:clamp(48px,5.5vw,84px);
+      margin:0;
+    }
+    .display em{font-style:italic;color:var(--accent)}
+    .lede{
+      font-size:17px;line-height:1.5;
+      color:var(--ink-soft);max-width:38ch;margin:0;
+    }
+    .feature-list{
+      display:flex;flex-direction:column;gap:18px;
+      margin-top:auto;
+    }
+    .feature-row{
+      display:flex;align-items:flex-start;gap:16px;
+      padding-block:14px;
+      border-top:.5px solid var(--rule-soft);
+    }
+    .feature-row:last-child{border-bottom:.5px solid var(--rule-soft)}
+    .feature-row .num{
+      font-family:'JetBrains Mono',monospace;font-size:10px;
+      color:var(--accent);letter-spacing:.1em;
+      padding-top:5px;width:26px;flex-shrink:0;
+    }
+    .feature-row .title{
+      font-family:'Instrument Serif',serif;font-size:22px;line-height:1.1;
+      letter-spacing:-.01em;margin:0 0 4px;
+    }
+    .feature-row .body{
+      font-size:13px;color:var(--muted);margin:0;line-height:1.5;
+    }
+
+    .quote{
+      margin-top:8px;
+      padding-top:24px;
+      border-top:.5px solid var(--rule-soft);
+    }
+    .quote p{
+      font-family:'Instrument Serif',serif;font-style:italic;
+      font-size:22px;line-height:1.35;margin:0 0 14px;
+      color:var(--ink-soft);letter-spacing:-.01em;
+    }
+    .quote .by{
+      font-size:11px;color:var(--muted);
+      font-family:'JetBrains Mono',monospace;letter-spacing:.08em;
+      text-transform:uppercase;
+    }
+
+    /* Right pane — form */
+    .pane-form{
+      padding:60px max(40px,5vw);
+      display:flex;flex-direction:column;
+      justify-content:center;
+    }
+    .form-card{
+      width:100%;max-width:440px;margin:0 auto;
+      display:flex;flex-direction:column;gap:28px;
+    }
+
+    .form-head{display:flex;flex-direction:column;gap:14px}
+    .form-head .title{
+      font-family:'Instrument Serif',serif;font-weight:400;
+      font-size:44px;line-height:1.02;letter-spacing:-.015em;
+      margin:0;
+    }
+    .form-head .title em{font-style:italic;color:var(--accent)}
+    .form-head .sub{
+      font-size:14px;color:var(--ink-soft);margin:0;line-height:1.5;
+    }
+    .form-head .continuing{
+      display:flex;align-items:center;gap:8px;
+      font-size:12px;color:var(--ink-soft);
+      font-family:'JetBrains Mono',monospace;
+      padding:8px 12px;border-radius:8px;
+      background:var(--chip);
+      align-self:flex-start;
+    }
+    .form-head .continuing .dot{
+      width:6px;height:6px;border-radius:50%;background:var(--accent);
+    }
+
+    /* Status message */
+    .auth-msg{
+      display:none;padding:12px 14px;border-radius:12px;
+      font-size:13px;line-height:1.45;
+    }
+    .auth-msg.show{display:block}
+    .auth-msg.error{
+      background:rgba(224,122,82,.10);
+      border:.5px solid rgba(224,122,82,.40);
+      color:#E89B7C;
+    }
+    .auth-msg.success{
+      background:rgba(150,190,120,.10);
+      border:.5px solid rgba(150,190,120,.35);
+      color:#AFCE92;
+    }
+
+    /* Tabs */
+    .tabs{
+      display:grid;grid-template-columns:1fr 1fr;
+      background:var(--surface);
+      padding:4px;border-radius:999px;
+      border:.5px solid var(--rule-soft);
+      position:relative;
+    }
+    .tabs button{
+      appearance:none;border:0;background:transparent;
+      color:var(--ink-soft);
+      font-family:'JetBrains Mono',monospace;
+      font-size:11px;letter-spacing:.12em;text-transform:uppercase;
+      padding:14px 0;border-radius:999px;
+      cursor:pointer;
+      transition:color .2s ease;
+      position:relative;z-index:1;
+      font-weight:500;
+    }
+    .tabs button.active{color:var(--accent-ink)}
+    .tabs::before{
+      content:"";position:absolute;
+      top:4px;bottom:4px;width:calc(50% - 4px);
+      background:var(--ink);
+      border-radius:999px;
+      transition:left .25s cubic-bezier(.3,.7,.2,1);
+      left:4px;
+    }
+    .tabs[data-mode="signup"]::before{left:calc(50% + 0px)}
+
+    /* Form fields */
+    .field{display:flex;flex-direction:column;gap:8px}
+    .field label{
+      font-family:'JetBrains Mono',monospace;
+      font-size:10px;letter-spacing:.12em;text-transform:uppercase;
+      color:var(--muted);
+    }
+    .field .input-wrap{
+      display:flex;align-items:center;
+      background:var(--surface);
+      border:.5px solid var(--rule-soft);
+      border-radius:12px;
+      transition:border-color .15s ease,background .15s ease;
+    }
+    .field .input-wrap:focus-within{
+      border-color:var(--accent);
+      background:var(--surface-2);
+    }
+    .field input{
+      flex:1;background:transparent;border:0;outline:none;
+      height:52px;padding:0 18px;
+      font-family:inherit;font-size:15px;color:var(--ink);
+    }
+    .field input::placeholder{color:var(--muted)}
+    .field .icon-btn{
+      appearance:none;background:transparent;border:0;
+      width:42px;height:42px;margin-right:5px;
+      color:var(--muted);cursor:pointer;
+      display:flex;align-items:center;justify-content:center;
+      border-radius:8px;
+    }
+    .field .icon-btn:hover{color:var(--ink);background:var(--rule-soft)}
+    .hint{
+      font-size:12px;color:var(--muted);margin-top:4px;
+    }
+    .hint a{color:var(--ink-soft);border-bottom:.5px solid var(--rule);padding-bottom:1px}
+    .hint a:hover{color:var(--accent);border-color:var(--accent)}
+
+    /* Submit */
+    .btn{
+      display:inline-flex;align-items:center;justify-content:center;gap:8px;
+      height:56px;padding:0 22px;border-radius:14px;
+      font-size:15px;font-weight:500;letter-spacing:.01em;
+      cursor:pointer;border:.5px solid transparent;
+      transition:transform .12s ease,background .2s ease,color .2s ease,border-color .2s ease;
+      width:100%;
+    }
+    .btn:hover{transform:translateY(-1px)}
+    .btn:disabled{opacity:.6;cursor:not-allowed;transform:none}
+    .btn-primary{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+    .btn-primary:hover{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+    .btn-ghost{background:var(--surface);color:var(--ink);border-color:var(--rule)}
+    .btn-ghost:hover{border-color:var(--ink-soft);background:var(--surface-2)}
+
+    .divider{
+      display:flex;align-items:center;gap:14px;
+      color:var(--muted);
+      font-family:'JetBrains Mono',monospace;
+      font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+    }
+    .divider hr{flex:1;border:0;border-top:.5px solid var(--rule)}
+
+    /* Footer */
+    .page-foot{
+      padding:20px max(24px,4vw);
+      border-top:.5px solid var(--rule-soft);
+      display:flex;justify-content:space-between;align-items:center;
+      font-size:12px;color:var(--muted);
+    }
+    .page-foot .links{display:flex;gap:24px}
+    .page-foot a:hover{color:var(--ink-soft)}
+
+    /* Subtle bg accent on marketing pane */
+    .pane-marketing::after{
+      content:"";position:absolute;
+      right:-200px;bottom:-200px;width:480px;height:480px;
+      border-radius:50%;
+      background:radial-gradient(closest-side, var(--accent) 0%, transparent 70%);
+      opacity:.08;pointer-events:none;
+    }
+  </style>
+</head>
+<body>
+  <header class="page-nav">
+    <a href="index.html" class="wordmark" aria-label="myVitalog home">
+      <span class="my">my</span><span class="vita">Vita</span><span>log</span><span class="dot">.</span>
+    </a>
+    <a href="index.html">← Back to site</a>
+  </header>
+
+  <main>
+    <!-- ── Marketing pane ─────────────────────────────────────────── -->
+    <aside class="pane-marketing">
+      <div>
+        <div class="eyebrow">A command center for your body</div>
+        <h1 class="display" style="margin-top:24px;">
+          Welcome <em>back.</em>
+        </h1>
+        <p class="lede" style="margin-top:20px;">
+          Everything you eat, lift, sleep and feel — quietly stitched into one
+          calm view. Pick up where you left off.
+        </p>
+      </div>
+
+      <div class="feature-list">
+        <div class="feature-row">
+          <span class="num">01</span>
+          <div>
+            <h3 class="title">Food &amp; macros</h3>
+            <p class="body">Snap a photo or describe a meal. AI fills in the numbers.</p>
+          </div>
+        </div>
+        <div class="feature-row">
+          <span class="num">02</span>
+          <div>
+            <h3 class="title">Training that progresses itself</h3>
+            <p class="body">Plans that inherit last week's load and nudge it forward.</p>
+          </div>
+        </div>
+        <div class="feature-row">
+          <span class="num">03</span>
+          <div>
+            <h3 class="title">Sleep, mood &amp; journal</h3>
+            <p class="body">A few taps a day. Read together with everything else.</p>
+          </div>
+        </div>
+        <div class="feature-row">
+          <span class="num">04</span>
+          <div>
+            <h3 class="title">A weekly read</h3>
+            <p class="body">A short, personal summary of what's actually working.</p>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- ── Form pane ──────────────────────────────────────────────── -->
+    <section class="pane-form">
+      <div class="form-card">
+        <div class="form-head">
+          <div class="eyebrow" id="eyebrow-text">Welcome back</div>
+          <h2 class="title" id="form-title">
+            Sign in to <em>Vitalog.</em>
+          </h2>
+          <p class="sub" id="form-sub">
+            Your command center is right where you left it.
+          </p>
+          <div class="continuing" id="continuing" style="display:none;">
+            <span class="dot"></span>
+            <span id="continuing-email"></span>
+          </div>
+        </div>
+
+        <div class="tabs" data-mode="signin" id="tabs" role="tablist">
+          <button type="button" data-mode="signin" class="active" role="tab">Sign in</button>
+          <button type="button" data-mode="signup" role="tab">Create account</button>
+        </div>
+
+        <div class="auth-msg" id="auth-msg" role="alert"></div>
+
+        <form id="auth-form" novalidate>
+          <div class="field" id="field-name" style="display:none;margin-bottom:18px;">
+            <label for="name">Your name</label>
+            <div class="input-wrap">
+              <input id="name" name="name" type="text" placeholder="e.g. Alex" autocomplete="name" />
+            </div>
+          </div>
+
+          <div class="field" style="margin-bottom:18px;">
+            <label for="email">Email</label>
+            <div class="input-wrap">
+              <input id="email" name="email" type="email" placeholder="you@example.com" autocomplete="email" required />
+            </div>
+          </div>
+
+          <div class="field" style="margin-bottom:18px;">
+            <label for="password">Password</label>
+            <div class="input-wrap">
+              <input id="password" name="password" type="password" placeholder="At least 6 characters" autocomplete="current-password" required minlength="6" />
+              <button type="button" class="icon-btn" id="toggle-pw" aria-label="Show password">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8S1 12 1 12z"/>
+                  <circle cx="12" cy="12" r="3"/>
+                </svg>
+              </button>
+            </div>
+            <div class="hint" id="pw-hint">
+              <a href="#" id="forgot">Forgot your password?</a>
+            </div>
+          </div>
+
+          <div class="field" id="field-confirm" style="display:none;margin-bottom:18px;">
+            <label for="confirm">Confirm password</label>
+            <div class="input-wrap">
+              <input id="confirm" name="confirm" type="password" placeholder="••••••••" autocomplete="new-password" />
+              <button type="button" class="icon-btn" id="toggle-confirm" aria-label="Show password">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8S1 12 1 12z"/>
+                  <circle cx="12" cy="12" r="3"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-primary" id="submit-btn" style="margin-top:8px;">
+            Sign in <span>→</span>
+          </button>
+        </form>
+
+        <div class="divider">
+          <hr/> or <hr/>
+        </div>
+
+        <button type="button" class="btn btn-ghost" id="google-btn">
+          <svg width="18" height="18" viewBox="0 0 24 24" style="margin-right:4px;">
+            <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+            <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84A11 11 0 0 0 12 23z"/>
+            <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18A11 11 0 0 0 1 12c0 1.77.42 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+            <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+          </svg>
+          Continue with Google
+        </button>
+
+        <p class="hint" style="text-align:center;margin:0;">
+          By continuing, you agree to our <a href="terms.html">Terms</a> and <a href="privacy.html">Privacy Policy</a>.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="page-foot">
+    <span>© 2026 Vitalog</span>
+    <div class="links">
+      <a href="privacy.html">Privacy</a>
+      <a href="terms.html">Terms</a>
+      <a href="index.html">Help</a>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+    (function () {
+      // ── Supabase ───────────────────────────────────────────────────────
+      const SUPABASE_URL = 'https://fqovfqzysvctejmtwigj.supabase.co';
+      const SUPABASE_KEY = 'sb_publishable_AgTnpMdSur2PLSGfGN8t8g_m1vgG5DH';
+      const _db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+      // Already signed in? Go straight to the app.
+      _db.auth.getSession().then(({ data: { session } }) => {
+        if (session) window.location.href = 'app.html';
+      });
+
+      // ── Handoff from the landing page (?mode=signup&email=...) ───────────
+      const params = new URLSearchParams(location.search);
+      const initialMode = params.get('mode') === 'signup' ? 'signup' : 'signin';
+      const initialEmail = params.get('email') || '';
+
+      const tabs = document.getElementById('tabs');
+      const tabButtons = tabs.querySelectorAll('button');
+      const fieldName = document.getElementById('field-name');
+      const fieldConfirm = document.getElementById('field-confirm');
+      const eyebrowText = document.getElementById('eyebrow-text');
+      const formTitle = document.getElementById('form-title');
+      const formSub = document.getElementById('form-sub');
+      const submitBtn = document.getElementById('submit-btn');
+      const pwInput = document.getElementById('password');
+      const pwHint = document.getElementById('pw-hint');
+      const continuing = document.getElementById('continuing');
+      const continuingEmail = document.getElementById('continuing-email');
+      const emailInput = document.getElementById('email');
+      const confirmInput = document.getElementById('confirm');
+      const nameInput = document.getElementById('name');
+      const msgEl = document.getElementById('auth-msg');
+
+      const submitLabel = { signin: 'Sign in <span>→</span>', signup: 'Create account <span>→</span>' };
+
+      function showError(m) { msgEl.textContent = m; msgEl.className = 'auth-msg error show'; }
+      function showSuccess(m) { msgEl.textContent = m; msgEl.className = 'auth-msg success show'; }
+      function clearMsg() { msgEl.textContent = ''; msgEl.className = 'auth-msg'; }
+
+      function currentMode() { return tabs.getAttribute('data-mode'); }
+
+      function applyMode(mode) {
+        tabs.setAttribute('data-mode', mode);
+        tabButtons.forEach((b) => b.classList.toggle('active', b.dataset.mode === mode));
+
+        if (mode === 'signup') {
+          fieldName.style.display = '';
+          fieldConfirm.style.display = '';
+          eyebrowText.textContent = 'Get started';
+          formTitle.innerHTML = 'Create your <em>Vitalog.</em>';
+          formSub.textContent = 'Free for 30 days. No card required.';
+          submitBtn.innerHTML = submitLabel.signup;
+          pwInput.setAttribute('placeholder', 'At least 6 characters');
+          pwInput.setAttribute('autocomplete', 'new-password');
+          pwHint.style.display = 'none';
+          document.title = 'myVitalog — Create your account';
+        } else {
+          fieldName.style.display = 'none';
+          fieldConfirm.style.display = 'none';
+          eyebrowText.textContent = 'Welcome back';
+          formTitle.innerHTML = 'Sign in to <em>Vitalog.</em>';
+          formSub.textContent = 'Your command center is right where you left it.';
+          submitBtn.innerHTML = submitLabel.signin;
+          pwInput.setAttribute('placeholder', '••••••••');
+          pwInput.setAttribute('autocomplete', 'current-password');
+          pwHint.style.display = '';
+          document.title = 'myVitalog — Sign in';
+        }
+      }
+
+      tabButtons.forEach((b) => {
+        b.addEventListener('click', () => { clearMsg(); applyMode(b.dataset.mode); });
+      });
+
+      if (initialEmail) {
+        emailInput.value = initialEmail;
+        continuingEmail.textContent = 'Continuing as ' + initialEmail;
+        continuing.style.display = '';
+      }
+      applyMode(initialMode);
+
+      // Drop the cursor where the visitor still needs to type.
+      if (initialEmail) {
+        const focusTarget = initialMode === 'signup' ? nameInput : pwInput;
+        setTimeout(() => focusTarget && focusTarget.focus(), 60);
+      }
+
+      // ── Password show/hide ───────────────────────────────────────────────
+      function bindToggle(btnId, inputId) {
+        const btn = document.getElementById(btnId);
+        const input = document.getElementById(inputId);
+        if (!btn || !input) return;
+        btn.addEventListener('click', () => {
+          const isPw = input.type === 'password';
+          input.type = isPw ? 'text' : 'password';
+          btn.setAttribute('aria-label', isPw ? 'Hide password' : 'Show password');
+        });
+      }
+      bindToggle('toggle-pw', 'password');
+      bindToggle('toggle-confirm', 'confirm');
+
+      // ── Auth submit (sign in / create account) ───────────────────────────
+      function setLoading(on) {
+        submitBtn.disabled = on;
+        if (on) submitBtn.innerHTML = '<span style="opacity:.7">Working…</span>';
+        else submitBtn.innerHTML = submitLabel[currentMode()];
+      }
+
+      document.getElementById('auth-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        clearMsg();
+        const mode = currentMode();
+        const email = emailInput.value.trim();
+        const password = pwInput.value;
+
+        if (!email) { showError('Please enter your email.'); emailInput.focus(); return; }
+
+        if (mode === 'signin') {
+          setLoading(true);
+          const { error } = await _db.auth.signInWithPassword({ email, password });
+          if (error) { showError(error.message); setLoading(false); }
+          else { window.location.href = 'app.html'; }
+        } else {
+          const confirm = confirmInput.value;
+          const name = (nameInput.value || '').trim();
+          if (password.length < 6) { showError('Password must be at least 6 characters.'); return; }
+          if (password !== confirm) { showError('Passwords do not match.'); return; }
+          setLoading(true);
+          const { error } = await _db.auth.signUp({ email, password });
+          if (error) { showError(error.message); setLoading(false); }
+          else {
+            if (name) {
+              try {
+                const existing = JSON.parse(localStorage.getItem('vitalog_settings') || '{}');
+                existing.name = name;
+                localStorage.setItem('vitalog_settings', JSON.stringify(existing));
+              } catch (_) {}
+            }
+            showSuccess('Account created! Check your email to confirm, then sign in.');
+            setLoading(false);
+          }
+        }
+      });
+
+      // ── Google OAuth ─────────────────────────────────────────────────────
+      document.getElementById('google-btn').addEventListener('click', async () => {
+        clearMsg();
+        const { error } = await _db.auth.signInWithOAuth({
+          provider: 'google',
+          options: { redirectTo: window.location.origin + '/app.html' }
+        });
+        if (error) showError(error.message);
+      });
+
+      // ── Forgot password ──────────────────────────────────────────────────
+      document.getElementById('forgot').addEventListener('click', async (e) => {
+        e.preventDefault();
+        clearMsg();
+        const email = emailInput.value.trim();
+        if (!email) { showError('Enter your email above, then tap “Forgot your password?”.'); emailInput.focus(); return; }
+        const { error } = await _db.auth.resetPasswordForEmail(email, {
+          redirectTo: window.location.origin + '/login.html'
+        });
+        if (error) showError(error.message);
+        else showSuccess('Password reset link sent to ' + email + '.');
+      });
+    })();
+  </script>
+</body>
+</html>
